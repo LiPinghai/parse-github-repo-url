@@ -7,9 +7,11 @@ module.exports = function (string) {
 
   string = string.replace('//www.', '//')
   // normalize git@ and https:git@ urls
-  string = string.replace(/^git@/, 'https://')
-  string = string.replace(/^https:git@/, 'https://')
-  string = string.replace('.com:', '.com/')
+  if (~string.indexOf('git@') || ~string.indexOf('https:git@')) {
+    string = string.replace(/^git@/, 'https://')
+    string = string.replace(/^https:git@/, 'https://')
+    string = string.replace('.com:', '.com/')
+  }
 
   if (!~string.indexOf('://')) {
     return false
